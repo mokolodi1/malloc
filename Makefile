@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/01/24 17:29:30 by tfleming         ###   ########.fr        #
+#    Updated: 2017/02/16 23:32:31 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,17 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-HEADERS =	-I includes/ \
-			-I libft/ \
+HEADERS =	-I include/ \
+			-I libft/include/
 
 LIBFT = libft/libft.a
 
-SRC =	srcs/malloc.c
-		# srcs/free.c \
-		# srcs/realloc.c \
-		# srcs/show_alloc_mem.c \
-		# srcs/large_malloc.c \
-		# srcs/manage_maps.c
+SRC =	src/malloc.c
+		# src/free.c \
+		# src/realloc.c \
+		# src/show_alloc_mem.c \
+		# src/large_malloc.c \
+		# src/manage_maps.c
 
 OBJ = $(SRC:.c=.o)
 
