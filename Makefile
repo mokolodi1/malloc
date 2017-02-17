@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/02/16 23:32:31 by tfleming         ###   ########.fr        #
+#    Updated: 2017/02/17 12:08:07 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,8 @@ HEADERS =	-I include/ \
 
 LIBFT = libft/libft.a
 
-SRC =	src/malloc.c
-		# src/free.c \
-		# src/realloc.c \
-		# src/show_alloc_mem.c \
-		# src/large_malloc.c \
-		# src/manage_maps.c
+SRC =	src/malloc.c \
+		src/get_alloc_data.c
 
 OBJ = $(SRC:.c=.o)
 

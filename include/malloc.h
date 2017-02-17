@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/02/17 01:40:16 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/02/17 13:01:54 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define FT_MALLOC_H
 
 # include <stdlib.h>
-// # include <unistd.h>
+# include <unistd.h>
 # include <sys/mman.h>
 # include <errno.h>
 # include "libft.h"
 
 // TODO: change these
 # define TINY_SIZE 8
-# define MEDIUM_SIZE 32
+# define MEDIUM_SIZE 64
 
 /*
 ** *_mmaps stores all of the mmaps made for that size
@@ -36,7 +36,7 @@ typedef struct		s_alloc_type {
 	t_list			*allocations;
 	size_t			next_location;
 	size_t			max_location;
-	size_t
+	size_t			bytes_per_mmap;
 }					t_alloc_type;
 
 typedef struct		s_alloc_data {
@@ -45,13 +45,24 @@ typedef struct		s_alloc_data {
 	t_list			*large_mmaps;
 }					t_alloc_data;
 
-extern t_alloc_data	*g_alloc_data;
+/*
+** Public functions
+*/
 
 void				*malloc(size_t size);
-t_data				*get_alloc_data();
+
+/*
+** Utilities
+*/
+
+extern t_alloc_data	*g_alloc_data;
+
+t_alloc_data		*get_alloc_data();
+void				*get_new_mmap(size_t size);
+
 // void				free(void *ptr);
 // void				*realloc(void *ptr, size_t size);
 // void				show_alloc_mem();
-// t_data				*alloc_data();
+// t_alloc_data				*alloc_data();
 
 #endif

@@ -6,11 +6,24 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/02/17 01:40:45 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/02/17 13:04:59 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+/*
+** list_push_front is just like ft_list_push_front except it takes the
+** new t_list as a parameter so that malloc isn't recursive ;)
+*/
+
+void				list_push_front(t_list **begin_list , t_list *list_element
+									, void *data)
+{
+	list_element->data = data;
+	list_element->next = *begin_list;
+	*begin_list = list_element;
+}
 
 void				*get_new_mmap(size_t size)
 {
@@ -20,17 +33,19 @@ void				*get_new_mmap(size_t size)
 
 void				*alloc_non_large(t_alloc_type *type, size_t size)
 {
-	// check if we need to create a new mmap and create a new one if necessary
+	void			*new_alloc;
+
 	if (type->next_location + size >= type->max_location)
 	{
-		ft_list_push_front(&type->existing_mmaps, get_new_mmap(size));
-		// type->existing_mmaps->data
-		// I'M RIGHT HERE
+		new_alloc = get_new_mmap(type->bytes_per_mmap);
+		type->next_location = new_alloc;
+		type->max_location = new_alloc + type->bytes_per_mmap;
+		list_push_front(&type->existing_mmaps, new_alloc);
 	}
-	// figure out what to return
-	// add the new return value onto the allocations list
-	// update next_location
-	// return
+	new_alloc = type->next_location + sizeof(t_list);
+	list_push_front(&type->allocations, type->next_location, new_alloc);
+	type->next_location += size;
+	return (new_alloc);
 }
 
 void				*alloc_large(t_list **existing_mmaps, size)
@@ -38,7 +53,7 @@ void				*alloc_large(t_list **existing_mmaps, size)
 	void			*new_mmap;
 
 	new_mmap = get_new_mmap(size);
-	ft_list_push_front(existing_mmaps, new_mmap);
+	list_push_front(existing_mmaps, new_mmap, new_mmap + sizeof(t_list));
 	return (new_mmap);
 }
 

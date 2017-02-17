@@ -1,25 +1,42 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    run.sh                                             :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/02/16 22:27:02 by tfleming          #+#    #+#              #
-#    Updated: 2017/02/16 23:37:09 by tfleming         ###   ########.fr        #
+#    Created: 2017/02/17 12:53:54 by tfleming          #+#    #+#              #
+#    Updated: 2017/02/17 13:01:32 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# create the library
-make -C ..
+NAME = test_malloc
 
-# compile the main
-gcc -Wall -Wextra -Werror -I ../libft/include -o test_malloc ../libft/libft.a main.c
+HEADERS =	-I ../include/ \
+			-I ../libft/include
 
-# set some environmental variables so it uses our malloc
-export DYLD_LIBRARY_PATH=..
-export DYLD_INSERT_LIBRARIES=../libft_malloc.so
-export DYLD_FORCE_FLAT_NAMESPACE=1
+SRC =		main.c
 
-# run the tests
-./test_malloc
+OBJ = $(SRC:.c=.o)
+
+CC = gcc -Wall -Wextra -Werror
+
+%.o: %.c
+	$(CC) -o $@ -c $< $(HEADERS)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	make -C ..
+	$(CC) -shared -o $@ $(OBJ)
+	$(CC) -o $(NAME) $(OBJ)
+
+clean:
+	make clean -C ..
+	@rm -f $(OBJ)
+
+fclean: clean
+	make fclean -C ..
+	@rm -f $(NAME)
+
+re: fclean all
