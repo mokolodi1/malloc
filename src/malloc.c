@@ -6,30 +6,11 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/02/17 13:04:59 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/16 18:28:16 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
-/*
-** list_push_front is just like ft_list_push_front except it takes the
-** new t_list as a parameter so that malloc isn't recursive ;)
-*/
-
-void				list_push_front(t_list **begin_list , t_list *list_element
-									, void *data)
-{
-	list_element->data = data;
-	list_element->next = *begin_list;
-	*begin_list = list_element;
-}
-
-void				*get_new_mmap(size_t size)
-{
-	return (mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE
-					, -1, 0));
-}
 
 void				*alloc_non_large(t_alloc_type *type, size_t size)
 {

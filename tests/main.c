@@ -26,7 +26,7 @@ int			main()
 
 	printf("asdf");
 
-	i = 0;
+	i = 1;
 	while (i < TEST_UP_TO)
 	{
 		printf("hello");

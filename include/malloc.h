@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/02/17 13:01:54 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/16 18:12:35 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/mman.h>
 # include <errno.h>
 # include "libft.h"
+# include "ft_printf.h"
 
 // TODO: change these
 # define TINY_SIZE 8
@@ -60,6 +61,8 @@ void				*malloc(size_t size);
 extern t_alloc_data	*g_alloc_data;
 
 t_alloc_data		*get_alloc_data();
+void				list_push_front(t_list **begin_list , t_list *list_element
+										, void *data);
 void				*get_new_mmap(size_t size);
 
 // void				free(void *ptr);

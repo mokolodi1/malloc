@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/02/17 12:08:07 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/16 18:11:50 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,12 @@ HEADERS =	-I include/ \
 LIBFT = libft/libft.a
 
 SRC =	src/malloc.c \
-		src/get_alloc_data.c
+		src/get_alloc_data.c \
+		src/utilities.c
 
 OBJ = $(SRC:.c=.o)
 
-CC = gcc -Wall -Wextra -Werror
+CC = gcc -Wall -Wextra -Werror -g
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(HEADERS)

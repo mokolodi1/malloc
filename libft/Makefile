@@ -6,14 +6,14 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/04 17:52:57 by tfleming          #+#    #+#              #
-#    Updated: 2017/02/16 22:46:36 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/16 18:15:34 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =				libft.a
 
 CC =				gcc
-FLAGS =				-Wall -Werror -Wextra -O3
+FLAGS =				-Wall -Werror -Wextra -g
 
 INCLUDES =			./include
 FT_SRC_DIR =		./libft

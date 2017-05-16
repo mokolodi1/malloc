@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:59:05 by tfleming          #+#    #+#             */
-/*   Updated: 2017/02/17 13:04:23 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/16 18:06:01 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			setup_alloc_data()
 	size_t		tiny_size;
 	size_t		medium_size;
 
+	g_alloc_data = get_new_mmap(sizeof(t_alloc_data));
 	ft_bzero(g_alloc_data, sizeof(t_alloc_data));
 	pagesize = getpagesize();
 	tiny_size = TINY_SIZE * pagesize;
