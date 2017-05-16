@@ -1,0 +1,8 @@
+# ignore everything except stuff with an extension
+*
+!*/
+!*.*
+
+*.o
+*.so
+*.a
