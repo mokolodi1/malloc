@@ -24,9 +24,11 @@
 # define MEDIUM_SIZE 64
 
 /*
-** *_mmaps stores all of the mmaps made for that size
-** *_allocations stores all of the malloc return values for that size
-** *_next_location caches the next location in the current mmap for that size
+** - existing_mmaps stores all of the mmaps made for that size
+** - allocations stores all of the malloc return values for that size
+** - next_location caches the next location in the current mmap for
+**   that size
+** - max_location is the (exclusive) end of the current mmap
 **
 ** The first item on the list is the freshest.
 */
@@ -34,8 +36,8 @@
 typedef struct		s_alloc_type {
 	t_list			*existing_mmaps;
 	t_list			*allocations;
-	size_t			next_location;
-	size_t			max_location;
+	void			*next_location;
+	void			*max_location;
 	size_t			bytes_per_mmap;
 }					t_alloc_type;
 

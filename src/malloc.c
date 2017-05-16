@@ -38,9 +38,9 @@ void				*alloc_non_large(t_alloc_type *type, size_t size)
 	if (type->next_location + size >= type->max_location)
 	{
 		new_alloc = get_new_mmap(type->bytes_per_mmap);
-		type->next_location = new_alloc;
+		type->next_location = new_alloc + sizeof(t_list);
 		type->max_location = new_alloc + type->bytes_per_mmap;
-		list_push_front(&type->existing_mmaps, new_alloc);
+		list_push_front(&type->existing_mmaps, new_alloc, new_alloc);
 	}
 	new_alloc = type->next_location + sizeof(t_list);
 	list_push_front(&type->allocations, type->next_location, new_alloc);
@@ -48,7 +48,7 @@ void				*alloc_non_large(t_alloc_type *type, size_t size)
 	return (new_alloc);
 }
 
-void				*alloc_large(t_list **existing_mmaps, size)
+void				*alloc_large(t_list **existing_mmaps, size_t size)
 {
 	void			*new_mmap;
 
@@ -59,13 +59,13 @@ void				*alloc_large(t_list **existing_mmaps, size)
 
 void				*malloc(size_t size)
 {
-	t_alloc_data	alloc_data;
+	t_alloc_data	*alloc_data;
 
 	alloc_data = get_alloc_data();
 	size += sizeof(t_list);
-	if (size <= TINY_MAX)
+	if (size <= TINY_SIZE)
 		return alloc_non_large(&alloc_data->tiny, size);
-	if (size <= MEDIUM_MAX)
+	if (size <= MEDIUM_SIZE)
 		return alloc_non_large(&alloc_data->medium, size);
-	return alloc_large(&alloc_data->large_mmaps, size)
+	return alloc_large(&alloc_data->large_mmaps, size);
 }
