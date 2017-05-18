@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:34:27 by tfleming          #+#    #+#             */
-/*   Updated: 2015/03/17 14:12:18 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/18 15:20:35 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,5 +216,34 @@ void				ft_pq_add(t_priority_queue *priority_queue, void *element);
 void				*ft_pq_remove(t_priority_queue *priority_queue);
 void				ft_pq_resize_array(t_priority_queue *priority_queue);
 void				*ft_pq_peek(t_priority_queue *priority_queue);
+
+/*
+** Red Black Binary Search Trees
+** Adapted from the Java version found here:
+** http://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html
+** Original authors: Robert Sedgewick, Kevin Wayne
+**
+** t_rb_node:
+** - color: color of parent link
+** - size: subtree count
+*/
+
+typedef struct		s_rb_node
+{
+	void			*key;
+	void			*value;
+	t_rb_node		*left;
+	t_rb_node		*right;
+	int				color;
+	int				size;
+}					t_rb_node;
+
+typedef struct		s_rb_tree
+{
+	t_rb_tree		*root;
+	int				(*compare)(void*, void*);
+}					t_rb_tree;
+
+
 
 #endif
