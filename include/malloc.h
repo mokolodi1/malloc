@@ -20,7 +20,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-// TODO: change these
+// TODO: do these have to be a multiple of getpagesize()?
 # define TINY_SIZE 8
 # define MEDIUM_SIZE 64
 

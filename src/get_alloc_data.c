@@ -35,6 +35,8 @@ void			setup_alloc_data()
 		medium_size *= 2;
 	g_alloc_data->tiny.bytes_per_mmap = tiny_size + sizeof(t_list);
 	g_alloc_data->medium.bytes_per_mmap = medium_size + sizeof(t_list);
+	printf("tiny_bytes_per_mmap: %zu\n", tiny_size);
+	printf("medium_bytes_per_mmap: %zu\n", medium_size);
 }
 
 t_alloc_data	*get_alloc_data()

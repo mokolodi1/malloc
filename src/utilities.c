@@ -30,6 +30,6 @@ void				*get_new_mmap(size_t size)
 	
 	void *yop = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE
 					, -1, 0);
-	ft_printf("%p\n", yop);
+	printf("%p\n", yop);
 	return yop;
 }

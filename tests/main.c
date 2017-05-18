@@ -15,32 +15,36 @@
 #include <string.h>
 #include "malloc.h"
 
-#define		TEST_UP_TO	10
+#define REPITITIONS		10
 
 int			main()
 {
+	printf("Starting testing program");
 	printf("getpagesize: %d\n", getpagesize());
 
 	size_t	i;
-	char	*malloced[TEST_UP_TO];
+	char	*malloced[REPITITIONS];
 
-	printf("asdf");
-
-	i = 1;
-	while (i < TEST_UP_TO)
+	printf("About to start maloccing...\n");
+	i = 0;
+	while (i < REPITITIONS)
 	{
-		printf("hello");
-		malloced[i] = (char*)malloc(i + 1);
-		memset(malloced[i], 'y', i - 1);
-		malloced[i][i] = '\0';
+		printf("Testing: %zu\n", i);
+		malloced[i] = (char*)malloc(8);
+		memset(malloced[i], 'y', 8);
+		malloced[i][7] = '\0';
 		i++;
 	}
-	while (i < TEST_UP_TO)
+	printf("Checking the memory is still there and freeing...\n");
+	i = 0;
+	while (i < REPITITIONS)
 	{
-		if (strlen(malloced[i]) != i) {
+		if (strlen(malloced[i]) != 7) {
 			printf("Failed with size = %zu\n", i);
 		}
+		free(malloced[9]);
 		i++;
 	}
+	printf("Done testing!\n");
 	return (0);
 }
