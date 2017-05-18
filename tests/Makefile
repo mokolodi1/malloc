@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/17 12:53:54 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/16 18:14:30 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/18 14:17:45 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C ..
 	$(CC) -shared -o $@ $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) ../src/malloc.o ../src/get_alloc_data.o ../libft/libft.a ../src/utilities.o
+	$(CC) -o $(NAME) $(OBJ) ../src/malloc.o ../src/get_alloc_data.o ../libft/libft.a ../src/utilities.o ../src/free.o
 
 clean:
 	make clean -C ..

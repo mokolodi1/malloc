@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/16 18:28:16 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/18 14:15:27 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void				*alloc_non_large(t_alloc_type *type, size_t size)
 
 	if (type->next_location + size >= type->max_location)
 	{
-		new_memory = get_new_memory(type->bytes_per_mmap);
+		new_memory = get_new_mmap(type->bytes_per_mmap);
 		if (!new_memory)
 			return (NULL);
 		type->next_location = new_memory + sizeof(t_list);
@@ -35,9 +35,9 @@ void				*alloc_large(t_list **existing_mmaps, size_t size)
 {
 	void			*new_memory;
 
-	new_memory = get_new_memory(size);
+	new_memory = get_new_mmap(size);
 	if (!new_memory)
-		return NULL
+		return (NULL);
 	list_push_front(existing_mmaps, new_memory, new_memory + sizeof(t_list));
 	return (new_memory);
 }
