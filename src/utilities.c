@@ -27,9 +27,11 @@ void				list_push_front(t_list **begin_list , t_list *list_element
 
 void				*get_new_mmap(size_t size)
 {
-	
-	void *yop = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE
+	void			*new_mmap;
+
+	new_mmap = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE
 					, -1, 0);
-	printf("%p\n", yop);
-	return yop;
+	if (new_mmap == MAP_FAILED)
+		return (NULL);
+	return new_mmap;
 }

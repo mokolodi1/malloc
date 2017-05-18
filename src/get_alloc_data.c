@@ -25,16 +25,18 @@ void			setup_alloc_data()
 	size_t		medium_size;
 
 	g_alloc_data = get_new_mmap(sizeof(t_alloc_data));
+	if (!g_alloc_data)
+		return ;
 	ft_bzero(g_alloc_data, sizeof(t_alloc_data));
 	pagesize = getpagesize();
-	tiny_size = TINY_SIZE * pagesize;
-	medium_size = MEDIUM_SIZE * pagesize;
-	while (tiny_size < 100 * TINY_SIZE)
+	tiny_size = pagesize;
+	medium_size = pagesize;
+	while (tiny_size < 100 * TINY_SIZE + sizeof(t_list))
 		tiny_size *= 2;
-	while (medium_size < 100 * MEDIUM_SIZE)
+	while (medium_size < 100 * MEDIUM_SIZE + sizeof(t_list))
 		medium_size *= 2;
-	g_alloc_data->tiny.bytes_per_mmap = tiny_size + sizeof(t_list);
-	g_alloc_data->medium.bytes_per_mmap = medium_size + sizeof(t_list);
+	g_alloc_data->tiny.bytes_per_mmap = tiny_size;
+	g_alloc_data->medium.bytes_per_mmap = medium_size;
 	printf("tiny_bytes_per_mmap: %zu\n", tiny_size);
 	printf("medium_bytes_per_mmap: %zu\n", medium_size);
 }
