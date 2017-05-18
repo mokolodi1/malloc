@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lib.h                                           :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:34:27 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 15:20:35 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/18 18:16:01 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,9 @@ typedef struct		s_rb_tree
 	int				(*compare)(void*, void*);
 }					t_rb_tree;
 
-
+int					ft_rb_size(t_rb_tree *tree);
+int					ft_rb_is_empty(t_rb_tree *tree);
+void				*ft_rb_get(t_rb_tree *tree, void *key);
+void				ft_rb_put(t_rb_tree *tree, void *key, void *value);
 
 #endif

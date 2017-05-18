@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilities.c                                        :+:      :+:    :+:   */
+/*   ft_rb_get.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 15:14:36 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 17:39:52 by tfleming         ###   ########.fr       */
+/*   Created: 2017/05/18 17:33:48 by tfleming          #+#    #+#             */
+/*   Updated: 2017/05/18 17:39:31 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #import "rb_trees.h"
 
-/*
-** private functions: is_red, size(t_rb_node *node)
-*/
-
-int				is_red(t_rb_node *node)
+void				*ft_rb_get(t_rb_tree *tree, void *key)
 {
-	if (node)
-		return (node->color == RB_RED);
-	return (0);
-}
+	t_rb_node		*current;
+	int				comparison;
 
-int				size(t_rb_node *node)
-{
-	if (node)
-		return (node.size);
-	return (0);
-}
-
-int				ft_rb_size(t_rb_tree *tree)
-{
-	return (size(tree->root));
-}
-
-int				ft_rb_is_empty(t_rb_tree *tree)
-{
-	return (tree->root == NULL);
+	current = tree->root;
+	while (current)
+	{
+		comparison = tree->compare(key, current->key);
+		if (comparison < 0)
+			current = current->left;
+		else if (comparison > 0)
+			current = current->right;
+		else
+			return current->value;
+	}
+	return (NULL);
 }

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rb_trees.h                                         :+:      :+:    :+:   */
+/*   ft_rb_put.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 15:17:13 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 15:20:34 by tfleming         ###   ########.fr       */
+/*   Created: 2017/05/18 17:40:28 by tfleming          #+#    #+#             */
+/*   Updated: 2017/05/18 17:43:51 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RB_TREES_H
-# define RB_TREES_H
+#include "rb_trees.h"
 
-# import "libft.h"
+t_rb_node			*put(t_rb_node *subtree_root, void *key, void *value)
+{
+	
+}
 
-# define			RB_RED		1
-# define			RB_BLACK	0
-
-/*
-** Utilities
-*/
-
-
-
-#endif
+void				ft_rb_put(t_rb_tree *tree, void *key, void *value)
+{
+	put(tree->root, key, value);
+	tree->root.value = RB_BLACK;
+}
