@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:34:27 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 18:16:01 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 14:51:48 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,5 +248,6 @@ int					ft_rb_size(t_rb_tree *tree);
 int					ft_rb_is_empty(t_rb_tree *tree);
 void				*ft_rb_get(t_rb_tree *tree, void *key);
 void				ft_rb_put(t_rb_tree *tree, void *key, void *value);
+void				ft_rb_delete(t_rb_tree *tree, void *key);
 
 #endif

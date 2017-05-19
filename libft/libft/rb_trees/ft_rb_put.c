@@ -6,7 +6,7 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 17:40:28 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 17:43:51 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 14:51:44 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,7 @@ t_rb_node			*create_node(void *key, void *value)
 	return (new_node);
 }
 
-t_rb_node			*rotate_left(t_rb_node *node)
-{
-	
-}
 
-t_rb_node			*rotate_right(t_rb_node *node)
-{
-	
-}
 
 // TODO: flip_colors
 
@@ -60,7 +52,6 @@ t_rb_node			*put(t_rb_node *node, int (*compare)(void*, void*)
 		flip_colors(node);
 	node->size = size(node->left) + size(node->right) + 1;
 	return (node);
-	
 }
 
 void				ft_rb_put(t_rb_tree *tree, void *key, void *value)
