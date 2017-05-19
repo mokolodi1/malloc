@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/18 14:17:55 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/19 15:46:40 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HEADERS =	-I include/ \
 LIBFT = libft/libft.a
 
 SRC =	src/malloc.c \
-		src/get_alloc_data.c \
+		src/get_alloc_env.c \
 		src/utilities.c \
 		src/free.c
 

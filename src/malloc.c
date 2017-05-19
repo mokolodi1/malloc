@@ -6,53 +6,73 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 14:15:27 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 18:11:04 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void				*alloc_non_large(t_alloc_type *type, size_t size)
+void				*new_mmap_for_type(t_list **existing_mmaps
+										, t_alloc_info *info)
 {
-	void			*new_memory;
+	t_mmap			*new_mmap;
 
-	if (type->next_location + size >= type->max_location)
-	{
-		new_memory = get_new_mmap(type->bytes_per_mmap);
-		if (!new_memory)
-			return (NULL);
-		type->next_location = new_memory + sizeof(t_list);
-		type->max_location = new_memory + type->bytes_per_mmap;
-		list_push_front(&type->existing_mmaps, new_memory, new_memory);
-	}
-	new_memory = type->next_location + sizeof(t_list);
-	list_push_front(&type->allocations, type->next_location, new_memory);
-	type->next_location += size;
-	return (new_memory);
+	info->current = get_new_mmap(info->bytes_per_mmap);
+	if (!info->current)
+		return (NULL);
+	list_push_front(existing_mmaps, (t_list*)info->current, info->current);
+	new_mmap = (t_mmap*)info->current + sizeof(t_list);
+	new_mmap->location = info->current;
+	new_mmap->size = info->bytes_per_mmap;
+	info->next_location = new_mmap + sizeof(t_mmap);
+	return (info->current);
 }
 
-void				*alloc_large(t_list **existing_mmaps, size_t size)
+void				*alloc_non_large(t_alloc_env *env, t_size_info *info
+										, size_t size, t_alloc_type malloc_type)
 {
-	void			*new_memory;
+	t_allocation	*allocation;
 
-	new_memory = get_new_mmap(size);
-	if (!new_memory)
+	size += sizeof(t_list);
+	if (info->next_location + size > info->current + info->bytes_per_mmap)
+	{
+		if (!new_mmap_for_type(existing_mmaps, info))
+			return (NULL);
+	}
+	allocation = (t_allocation*)info->next_location + sizeof(t_list);
+	allocation->location = allocation + sizeof(t_allocation);
+	allocation->type = malloc_type;
+	allocation->size = size;
+	list_push_front(&env->allocations, info->next_location, allocation);
+	return (allocation->location);
+}
+
+void				*alloc_large(t_alloc_env *env, size_t size)
+{
+	t_allocation	*allocation;
+
+	allocation = (t_allocation*)get_new_mmap(size);
+	if (!allocation)
 		return (NULL);
-	list_push_front(existing_mmaps, new_memory, new_memory + sizeof(t_list));
-	return (new_memory);
+	allocation->location = (void*)allocation + sizeof(t_allocation)
+			+ sizeof(t_list);
+	allocation->type = LARGE;
+	allocation->size = size;
+	list_push_front(&env->allocations,
+					(t_list*)allocation + sizeof(t_allocation), allocation);
+	return (allocation->location);
 }
 
 void				*malloc(size_t size)
 {
-	t_alloc_data	*alloc_data;
+	t_alloc_env		*env;
 
-	alloc_data = get_alloc_data();
-	if (!alloc_data)
+	env = get_env();
+	if (!env)
 		return (NULL);
-	size += sizeof(t_list);
-	if (size <= TINY_SIZE)
-		return alloc_non_large(&alloc_data->tiny, size);
-	if (size <= MEDIUM_SIZE)
-		return alloc_non_large(&alloc_data->medium, size);
-	return alloc_large(&alloc_data->large_mmaps, size);
+	if (size + sizeof(t_list) <= TINY_SIZE)
+		return alloc_non_large(env, &env.tiny, size, TINY);
+	if (size + sizeof(t_list) <= MEDIUM_SIZE)
+		return alloc_non_large(env, &env.medium, size, MEDIUM);
+	return alloc_large(&env->existing_mmaps, size);
 }

@@ -1,49 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_alloc_data.c                                   :+:      :+:    :+:   */
+/*   get_alloc_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:59:05 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/16 18:06:01 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 16:41:30 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-t_alloc_data	*g_alloc_data = NULL;
+t_alloc_env	*g_alloc_env = NULL;
 
 /*
 ** NOTE: type containers must hold at least 100 mallocs
 */
 
-void			setup_alloc_data()
+void			setup_alloc_env()
 {
 	int			pagesize;
 	size_t		tiny_size;
 	size_t		medium_size;
 
-	g_alloc_data = get_new_mmap(sizeof(t_alloc_data));
-	if (!g_alloc_data)
+	g_alloc_env = get_new_mmap(sizeof(t_alloc_env));
+	if (!g_alloc_env)
 		return ;
-	ft_bzero(g_alloc_data, sizeof(t_alloc_data));
+	ft_bzero(g_alloc_env, sizeof(t_alloc_env));
+	tiny_size = TINY_SIZE * MALLOCS_PER_SIZE;
+	medium_size = MEDIUM_SIZE * MALLOCS_PER_SIZE;
 	pagesize = getpagesize();
-	tiny_size = pagesize;
-	medium_size = pagesize;
-	while (tiny_size < 100 * TINY_SIZE + sizeof(t_list))
-		tiny_size *= 2;
-	while (medium_size < 100 * MEDIUM_SIZE + sizeof(t_list))
-		medium_size *= 2;
-	g_alloc_data->tiny.bytes_per_mmap = tiny_size;
-	g_alloc_data->medium.bytes_per_mmap = medium_size;
-	printf("tiny_bytes_per_mmap: %zu\n", tiny_size);
-	printf("medium_bytes_per_mmap: %zu\n", medium_size);
+	g_alloc_env.tiny.bytes_per_mmap =
+			tiny_size + (pagesize - tiny_size % pagesize);
+	g_alloc_env.medium.bytes_per_mmap =
+			medium_size + (pagesize - medium_size % pagesize);
+	printf("tiny bytes per mmap: %zu\n", g_alloc_env.tiny.bytes_per_mmap);
+	printf("medium bytes per mmap: %zu\n", g_alloc_env.medium.bytes_per_mmap);
 }
 
-t_alloc_data	*get_alloc_data()
+t_alloc_env	*get_alloc_env()
 {
-	if (!g_alloc_data)
-		setup_alloc_data();
-	return (g_alloc_data);
+	if (!g_alloc_env)
+		setup_alloc_env();
+	return (g_alloc_env);
 }

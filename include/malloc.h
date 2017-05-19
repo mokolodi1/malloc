@@ -6,12 +6,18 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/16 18:12:35 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 17:30:19 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
+
+/*
+** Note that in all instances where I use linked lists in this
+** implementation, I should be using hash maps for performance
+** reasons.
+*/
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -20,54 +26,61 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-// TODO: do these have to be a multiple of getpagesize()?
-# define TINY_SIZE 8
-# define MEDIUM_SIZE 64
-
 /*
-** - existing_mmaps stores all of the mmaps made for that size
-** - allocations stores all of the malloc return values for that size
-** - next_location caches the next location in the current mmap for
-**   that size
-** - max_location is the (exclusive) end of the current mmap
-**
-** The first item on the list is the freshest.
+** Tiny and medium containers must hold at least 100 mallocs.
 */
 
-typedef struct		s_alloc_type {
-	t_list			*existing_mmaps;
-	t_list			*allocations;
-	void			*next_location;
-	void			*max_location;
-	size_t			bytes_per_mmap;
+# define TINY_SIZE 8
+# define MEDIUM_SIZE 64
+# define MALLOCS_PER_SIZE 100
+
+typedef enum		e_alloc_type {
+	TINY, MEDIUM, LARGE
 }					t_alloc_type;
 
-typedef struct		s_alloc_data {
+typedef struct		s_allocation {
+	void			*location;
+	t_alloc_type	type;
+	size_t			size;
+}					t_allocation;
+
+typedef struct		s_mmap {
+	void			*location;
+	size_t			size;
+	size_t			allocation_count;
+}					t_mmap;
+
+typedef struct		s_size_info {
+	void			*current;
+	void			*next_location;
+	size_t			bytes_per_mmap;
+}					t_size_info;
+
+typedef struct		s_alloc_env {
+	t_list			*existing_mmaps;
+	t_list			*allocations;
 	t_alloc_type	tiny;
 	t_alloc_type	medium;
-	t_list			*large_mmaps;
-}					t_alloc_data;
+}					t_alloc_env;
 
 /*
 ** Public functions
 */
 
 void				*malloc(size_t size);
+void				free(void *ptr);
+void				*realloc(void *ptr, size_t size);
+void				show_alloc_mem();
 
 /*
 ** Utilities
 */
 
-extern t_alloc_data	*g_alloc_data;
+extern t_alloc_env	*g_alloc_env;
 
-t_alloc_data		*get_alloc_data();
-void				list_push_front(t_list **begin_list , t_list *list_element
+t_alloc_env			*get_alloc_env();
+void				list_push_front(t_list **begin_list, t_list *list_element
 										, void *data);
 void				*get_new_mmap(size_t size);
-
-// void				free(void *ptr);
-// void				*realloc(void *ptr, size_t size);
-// void				show_alloc_mem();
-// t_alloc_data				*alloc_data();
 
 #endif

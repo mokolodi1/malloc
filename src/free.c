@@ -6,24 +6,35 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:14:42 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 14:46:31 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/19 18:35:56 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void				free_in_list(void *pointer, t_list *allocations
-									, int is_large_mmap)
+int					compare_locations(t_allocation *first, t_allocation *second)
 {
-	
+	return (first->location == second->location);
 }
 
 void				free(void *pointer)
 {
-	t_list			*to_free;
+	t_list			*list_element;
+	t_alloc_env		*env;
+	t_allocation	allocation;
 
 	if (!pointer || !g_alloc_data)
 		return ;
-	
-	to_free = ft_list_find(
+	allocation->location = pointer;
+	list_element = ft_list_find(g_alloc_data->allocations, &allocation,
+							&compare_locations);
+	allocation = list_element->data;
+	if (list_element && list_element->type == LARGE) {
+		
+		munmap(list_element->, list_element->size);
+	}
+	else if (list_element) {
+		
+	}
+	list_element->
 }
