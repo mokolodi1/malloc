@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/16 18:12:35 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/24 16:32:53 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,23 @@
 # include "libft.h"
 # include "ft_printf.h"
 
-// TODO: do these have to be a multiple of getpagesize()?
-# define TINY_SIZE 8
-# define MEDIUM_SIZE 64
+# define TINY_SIZE 64
+# define MEDIUM_SIZE 256
+# define MALLOCS_PER_SIZE 100
+
+# define TRUE 1
+# define FALSE 0
+
+/*
+** NOTE: I take advantage of the fact that the memory location for
+** list_element is the same as the struct itself, so order matters for
+** t_metadata.
+*/
+
+typedef struct		s_metadata {
+	t_list			list_element;
+	size_t			size;
+}					t_metadata;
 
 /*
 ** - existing_mmaps stores all of the mmaps made for that size
@@ -34,40 +48,38 @@
 ** The first item on the list is the freshest.
 */
 
-typedef struct		s_alloc_type {
+typedef struct		s_alloc_info {
 	t_list			*existing_mmaps;
 	t_list			*allocations;
 	void			*next_location;
 	void			*max_location;
 	size_t			bytes_per_mmap;
-}					t_alloc_type;
+}					t_alloc_info;
 
-typedef struct		s_alloc_data {
-	t_alloc_type	tiny;
-	t_alloc_type	medium;
+typedef struct		s_alloc_env {
+	t_alloc_info	tiny;
+	t_alloc_info	medium;
 	t_list			*large_mmaps;
-}					t_alloc_data;
+}					t_alloc_env;
 
 /*
 ** Public functions
 */
 
 void				*malloc(size_t size);
+void				free(void *ptr);
+void				*realloc(void *ptr, size_t size);
+void				show_alloc_mem();
 
 /*
 ** Utilities
 */
 
-extern t_alloc_data	*g_alloc_data;
+extern t_alloc_env	*g_alloc_env;
 
-t_alloc_data		*get_alloc_data();
+t_alloc_env		*get_alloc_env();
 void				list_push_front(t_list **begin_list , t_list *list_element
 										, void *data);
 void				*get_new_mmap(size_t size);
-
-// void				free(void *ptr);
-// void				*realloc(void *ptr, size_t size);
-// void				show_alloc_mem();
-// t_alloc_data				*alloc_data();
 
 #endif

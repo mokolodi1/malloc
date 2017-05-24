@@ -6,12 +6,11 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/18 14:30:28 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/24 16:33:38 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <printf.h>
-#include <unistd.h>
 #include <string.h>
 #include "malloc.h"
 
@@ -24,7 +23,6 @@ int			many_of_size(size_t repititions, size_t size)
 	i = 0;
 	while (i < repititions)
 	{
-		printf("Testing: %zu\n", i);
 		malloced[i] = (char*)malloc(size);
 		memset(malloced[i], 'y', size - 1);
 		malloced[i][size - 1] = '\0';
@@ -37,7 +35,7 @@ int			many_of_size(size_t repititions, size_t size)
 		if (strlen(malloced[i]) != size - 1) {
 			printf("Failed with size = %zu\n", i);
 		}
-		free(malloced[9]);
+		free(malloced[i]);
 		i++;
 	}
 	printf("Done testing!\n");
@@ -46,7 +44,10 @@ int			many_of_size(size_t repititions, size_t size)
 
 int			main()
 {
-	printf("Starting testing program");
-	printf("getpagesize: %d\n", getpagesize());
-	many_of_size(100, 8);
+	// printf("Starting testing program!\n");
+	// printf("getpagesize: %d\n", getpagesize());
+	show_alloc_mem();
+	// printf("About to allocate 8 bytes 4 times.\n");
+	// many_of_size(4, 8);
+	// show_alloc_mem();
 }

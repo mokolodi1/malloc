@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/18 14:17:55 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/24 16:24:31 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ HEADERS =	-I include/ \
 LIBFT = libft/libft.a
 
 SRC =	src/malloc.c \
-		src/get_alloc_data.c \
+		src/get_alloc_env.c \
 		src/utilities.c \
-		src/free.c
+		src/free.c \
+		src/show_alloc_mem.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -38,7 +39,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	make -C libft/
 	$(CC) -shared -o $@ $(OBJ) $(LIBFT)
-	@ln -s $(NAME) libft_malloc.so
+	@ln -sf $(NAME) libft_malloc.so
 
 clean:
 	make clean -C libft/
