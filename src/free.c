@@ -6,25 +6,26 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:14:42 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:13:11 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:34:37 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-int					free_in_list(void *to_free, t_list **current, int is_large)
+int						free_in_list(void *to_free, t_list **current
+										, int is_large)
 {
-	t_metadata		*metadata;
+	t_alloc_metadata	*metadata;
 
 	while (*current)
 	{
 		if ((*current)->data == to_free)
 		{
 			if (is_large)
-				metadata = (t_metadata*)*current;
+				metadata = (t_alloc_metadata*)*current;
 			*current = (*current)->next;
 			if (is_large)
-				munmap(metadata, metadata->size + sizeof(t_metadata));
+				munmap(metadata, metadata->size + sizeof(t_alloc_metadata));
 			return (TRUE);
 		}
 		current = &(*current)->next;
@@ -32,9 +33,9 @@ int					free_in_list(void *to_free, t_list **current, int is_large)
 	return (FALSE);
 }
 
-void				free(void *to_free)
+void					free(void *to_free)
 {
-	int				found;
+	int					found;
 
 	if (!to_free || !g_alloc_env)
 		return ;

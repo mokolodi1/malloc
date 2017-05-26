@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:59:05 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:54:16 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:33:47 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void			setup_alloc_env(void)
 	if (!g_alloc_env)
 		return ;
 	ft_bzero(g_alloc_env, sizeof(t_alloc_env));
-	tiny_size = (TINY_SIZE + sizeof(t_metadata)) * MALLOCS_PER_SIZE;
-	medium_size = (MEDIUM_SIZE + sizeof(t_metadata)) * MALLOCS_PER_SIZE;
+	tiny_size = (TINY_SIZE + sizeof(t_alloc_metadata)) * MALLOCS_PER_SIZE;
+	medium_size = (MEDIUM_SIZE + sizeof(t_alloc_metadata)) * MALLOCS_PER_SIZE;
 	pagesize = getpagesize();
 	g_alloc_env->tiny.bytes_per_mmap =
 			tiny_size + (pagesize - tiny_size % pagesize);

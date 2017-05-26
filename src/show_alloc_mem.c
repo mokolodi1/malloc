@@ -6,13 +6,13 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 10:53:09 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:48:24 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:37:18 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void				print_mmaps(t_list *current, size_t bytes_per_mmap)
+void					print_mmaps(t_list *current, size_t bytes_per_mmap)
 {
 	if (!current)
 		ft_putstr(" None\n");
@@ -22,16 +22,16 @@ void				print_mmaps(t_list *current, size_t bytes_per_mmap)
 		while (current)
 		{
 			ft_putstr("    ");
-			print_pointer((uintmax_t)current);
+			print_pointer(current);
 			ft_putstr(" - ");
-			print_pointer((uintmax_t)current + bytes_per_mmap);
+			print_pointer(current + bytes_per_mmap);
 			ft_putstr("\n");
 			current = current->next;
 		}
 	}
 }
 
-void				print_all_mmaps(void)
+void					print_all_mmaps(void)
 {
 	ft_putstr("  TINY mmaps (");
 	put_size_t(g_alloc_env->tiny.bytes_per_mmap);
@@ -45,9 +45,9 @@ void				print_all_mmaps(void)
 				, g_alloc_env->medium.bytes_per_mmap);
 }
 
-void				print_allocations(t_list *current)
+void					print_allocations(t_list *current)
 {
-	t_metadata		*metadata;
+	t_alloc_metadata	*metadata;
 
 	if (!current)
 		ft_putstr(" None\n");
@@ -57,10 +57,10 @@ void				print_allocations(t_list *current)
 		while (current)
 		{
 			ft_putstr("    ");
-			metadata = (t_metadata*)current;
-			print_pointer((uintmax_t)metadata->list_element.data);
+			metadata = (t_alloc_metadata*)current;
+			print_pointer(metadata->list_element.data);
 			ft_putstr(" - ");
-			print_pointer((uintmax_t)metadata->list_element.data
+			print_pointer(metadata->list_element.data
 							+ metadata->size);
 			ft_putstr(" : ");
 			put_size_t(metadata->size);
@@ -70,9 +70,9 @@ void				print_allocations(t_list *current)
 	}
 }
 
-void				show_alloc_mem(void)
+void					show_alloc_mem(void)
 {
-	t_alloc_env		*env;
+	t_alloc_env			*env;
 
 	env = get_alloc_env();
 	if (!env)

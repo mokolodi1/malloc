@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:12:14 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 18:34:59 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@
 ** t_metadata.
 */
 
-typedef struct		s_metadata {
+typedef struct		s_mmap_metadata {
+	t_list			list_element;
+	size_t			allocations;
+}					t_mmap_metadata;
+
+typedef struct		s_alloc_metadata {
 	t_list			list_element;
 	size_t			size;
-}					t_metadata;
+	t_mmap_metadata	*mmap_metadata;
+}					t_alloc_metadata;
 
 /*
 ** - existing_mmaps stores all of the mmaps made for that size
@@ -50,6 +56,7 @@ typedef struct		s_metadata {
 
 typedef struct		s_alloc_info {
 	t_list			*existing_mmaps;
+	t_mmap_metadata	*current_mmap;
 	t_list			*allocations;
 	void			*next_location;
 	void			*max_location;
@@ -82,6 +89,6 @@ void				list_push_back(t_list **begin_list, t_list *list_element
 									, void *data);
 void				*get_new_mmap(size_t size);
 void				put_size_t(size_t number);
-void				print_pointer(uintmax_t pointer);
+void				print_pointer(void *pointer);
 
 #endif
