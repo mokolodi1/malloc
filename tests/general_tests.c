@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:17:19 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:51:20 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,22 @@ void		try_every_size_up_to(size_t max, size_t step)
 	show_alloc_mem();
 }
 
+void		get_a_megabyte(void)
+{
+	char	*addr;
+	int		i;
+
+	i = 0;
+	while (i < 200)
+	{
+		addr = (char*)malloc(1024);
+		addr[0] = 42;
+		i++;
+	}
+	ft_putstr("Allocated a megabyte. ");
+	show_alloc_mem();
+}
+
 int			main()
 {
 	ft_putstr("Starting testing program...\n");
@@ -107,5 +123,6 @@ int			main()
 	// alloc_and_free(4, 64);
 	// alloc_and_free(4, 1024);
 	// alloc_and_free(4, 4096);
-	growing_realloc();
+	// growing_realloc();
+	get_a_megabyte();
 }

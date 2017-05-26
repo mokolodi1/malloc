@@ -6,19 +6,19 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 12:12:26 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/24 12:12:34 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:22:08 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main() 
-{ 
-	int i; 
-	char *addr; 
+int main()
+{
+	int i;
+	char *addr;
 
-	i = 0; 
-	while (i < 1024) 
-	{ 
-		i++; 
-	} 
-	return (0); 
-} 
+	i = 0;
+	while (i < 1024)
+	{
+		i++;
+	}
+	return (0);
+}
