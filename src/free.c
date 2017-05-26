@@ -18,13 +18,15 @@ void					free_allocation(t_alloc_metadata *allocation
 	if (info)
 	{
 		allocation->mmap->allocations--;
-		if (allocation->mmap->allocations <= 0)
+		if (allocation->mmap->allocations == 0)
 		{
-			ft_list_remove(&info->existing_mmaps, allocation->mmap);
 			if (allocation->mmap == info->current_mmap)
-				info->current_mmap = NULL;
-			ft_putstr("h");
-			munmap(allocation->mmap, info->bytes_per_mmap);
+				info->next_location = info->current_mmap + 1;
+			else
+			{
+				ft_list_remove(&info->existing_mmaps, allocation->mmap);
+				munmap(allocation->mmap, info->mmap_size);
+			}
 		}
 	}
 	else
@@ -50,7 +52,7 @@ int						free_in_list(void *to_free, t_list **current
 	return (FALSE);
 }
 
-void					free(void *to_free)
+void					wrapped_free(void *to_free)
 {
 	int					found;
 	t_alloc_env			*env;
@@ -63,4 +65,11 @@ void					free(void *to_free)
 		found = free_in_list(to_free, &env->medium.allocations, &env->medium);
 	if (!found)
 		free_in_list(to_free, &env->large_mmaps, NULL);
+}
+
+void					free(void *to_free)
+{
+	pthread_mutex_lock(get_mutex());
+	wrapped_free(to_free);
+	pthread_mutex_unlock(get_mutex());
 }

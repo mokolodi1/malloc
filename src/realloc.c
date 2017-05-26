@@ -13,22 +13,22 @@
 #import "malloc.h"
 
 void					*realloc_list(void *old_pointer, size_t size
-										, t_list **current, int is_large)
+										, t_list **current, t_alloc_info *info)
 {
-	t_alloc_metadata	*metadata;
+	t_alloc_metadata	*old_allocation;
 	void				*new_memory;
 
 	while (*current)
 	{
 		if ((*current)->data == old_pointer)
 		{
-			new_memory = malloc(size);
-			metadata = (t_alloc_metadata*)*current;
+			new_memory = wrapped_malloc(size);
+			old_allocation = (t_alloc_metadata*)*current;
 			ft_memcpy(new_memory, old_pointer
-						, metadata->size < size ? metadata->size : size);
+						, old_allocation->size < size ?
+							old_allocation->size : size);
 			*current = (*current)->next;
-			if (is_large)
-				munmap(metadata, metadata->size + sizeof(t_alloc_metadata));
+			free_allocation(old_allocation, info);
 			return (new_memory);
 		}
 		current = &(*current)->next;
@@ -36,22 +36,31 @@ void					*realloc_list(void *old_pointer, size_t size
 	return (NULL);
 }
 
-void					*realloc(void *old_pointer, size_t size)
+void					*wrapped_realloc(void *old_pointer, size_t size)
 {
 	void				*new_memory;
 	t_alloc_env			*env;
 
 	if (!old_pointer)
-		return (malloc(size));
+		return (wrapped_malloc(size));
 	if (!(env = get_alloc_env()))
 		return (NULL);
-	new_memory = realloc_list(old_pointer, size, &env->tiny.allocations, FALSE);
+	new_memory = realloc_list(old_pointer, size, &env->tiny.allocations
+									, &env->tiny);
 	if (!new_memory)
 		new_memory = realloc_list(old_pointer, size, &env->medium.allocations
-									, FALSE);
+									, &env->medium);
 	if (!new_memory)
-		new_memory = realloc_list(old_pointer, size, &env->large_mmaps, TRUE);
-	if (!new_memory)
-		new_memory = malloc(size);
+		new_memory = realloc_list(old_pointer, size, &env->large_mmaps, NULL);
 	return (new_memory);
+}
+
+void					*realloc(void *old_pointer, size_t size)
+{
+	void				*address;
+	
+	pthread_mutex_lock(get_mutex());
+	address = wrapped_realloc(old_pointer, size);
+	pthread_mutex_unlock(get_mutex());
+	return (address);
 }

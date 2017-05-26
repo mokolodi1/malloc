@@ -17,8 +17,8 @@
 # include <unistd.h>
 # include <sys/mman.h>
 # include <errno.h>
+# include <pthread.h>
 # include "libft.h"
-# include "ft_printf.h"
 
 # define TINY_SIZE 64
 # define MEDIUM_SIZE 1024
@@ -60,7 +60,7 @@ typedef struct		s_alloc_info {
 	t_mmap_metadata	*current_mmap;
 	void			*next_location;
 	void			*max_location;
-	size_t			bytes_per_mmap;
+	size_t			mmap_size;
 }					t_alloc_info;
 
 typedef struct		s_alloc_env {
@@ -84,11 +84,15 @@ void				show_alloc_mem();
 
 extern t_alloc_env	*g_alloc_env;
 
-t_alloc_env			*get_alloc_env();
+void				*wrapped_malloc(size_t size);
+t_alloc_env			*get_alloc_env(void);
 void				list_push_back(t_list **begin_list, t_list *list_element
 									, void *data);
 void				*get_new_mmap(size_t size);
 void				put_size_t(size_t number);
 void				print_pointer(void *pointer);
+void				free_allocation(t_alloc_metadata *allocation
+									, t_alloc_info *info);
+pthread_mutex_t		*get_mutex(void);
 
 #endif

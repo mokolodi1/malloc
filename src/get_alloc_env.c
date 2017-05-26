@@ -29,10 +29,10 @@ void			setup_alloc_env(void)
 	medium_size = (MEDIUM_SIZE + sizeof(t_alloc_metadata)) * MALLOCS_PER_SIZE
 		+ sizeof(t_mmap_metadata);
 	pagesize = getpagesize();
-	g_alloc_env->tiny.bytes_per_mmap =
+	g_alloc_env->tiny.mmap_size =
 			tiny_size + (pagesize - tiny_size % pagesize);
 	
-	g_alloc_env->medium.bytes_per_mmap =
+	g_alloc_env->medium.mmap_size =
 			medium_size + (pagesize - medium_size % pagesize);
 }
 

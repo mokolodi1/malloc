@@ -12,6 +12,20 @@
 
 #include "malloc.h"
 
+int						new_mmap(t_alloc_info *info)
+{
+	if (info->current_mmap && info->current_mmap->allocations == 0)
+		ft_list_remove(&info->existing_mmaps, info->current_mmap);
+	info->current_mmap = get_new_mmap(info->mmap_size);
+	if (!info->current_mmap)
+		return (FALSE);
+	info->next_location = info->current_mmap + 1;
+	info->max_location = (void*)info->current_mmap + info->mmap_size;
+	list_push_back(&info->existing_mmaps, &info->current_mmap->list_element
+				   , info->current_mmap);
+	return (TRUE);
+}
+
 void					*alloc_non_large(t_alloc_info *info, size_t size)
 {
 	t_alloc_metadata	*allocation;
@@ -21,13 +35,8 @@ void					*alloc_non_large(t_alloc_info *info, size_t size)
 		|| info->next_location + size + sizeof(t_alloc_metadata)
 			>= info->max_location)
 	{
-		info->current_mmap = get_new_mmap(info->bytes_per_mmap);
-		if (!info->current_mmap)
+		if (!new_mmap(info))
 			return (NULL);
-		info->next_location = info->current_mmap + 1;
-		info->max_location = (void*)info->current_mmap + info->bytes_per_mmap;
-		list_push_back(&info->existing_mmaps, &info->current_mmap->list_element
-						, info->current_mmap);
 	}
 	allocation = (t_alloc_metadata*)info->next_location;
 	allocation->size = size;
@@ -53,7 +62,7 @@ void					*alloc_large(t_list **existing_mmaps, size_t size)
 	return (new_memory);
 }
 
-void					*malloc(size_t size)
+void					*wrapped_malloc(size_t size)
 {
 	t_alloc_env			*env;
 
@@ -65,4 +74,14 @@ void					*malloc(size_t size)
 	if (size <= MEDIUM_SIZE)
 		return (alloc_non_large(&env->medium, size));
 	return (alloc_large(&env->large_mmaps, size));
+}
+
+void					*malloc(size_t size)
+{
+	void				*address;
+	
+	pthread_mutex_lock(get_mutex());
+	address = wrapped_malloc(size);
+	pthread_mutex_unlock(get_mutex());
+	return (address);
 }

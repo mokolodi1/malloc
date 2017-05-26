@@ -49,23 +49,26 @@ void		alloc_and_free(size_t repititions, size_t size)
 	show_alloc_mem();
 }
 
-void		growing_realloc(void)
+void		growing_realloc(size_t max_size, size_t step)
 {
 	size_t	current_size;
-	size_t	step;
-	size_t	max_size;
-	void	*current;
+	char	*current;
 	
 	ft_putstr("\nGrowing realloc...\n");
 	current_size = 0;
-	step = 8;
-	max_size = 32;
 	current = NULL;
 	while (current_size <= max_size)
 	{
-		ft_putstr("Just allocated: ");
+		ft_putstr("Allocating: ");
 		put_size_t(current_size);
-		current = realloc(current, current_size);
+		current = (char*)realloc(current, current_size);
+		if (current_size > 0)
+		{
+			ft_memset(current, 'f', current_size);
+			current[current_size - 1] = '\0';
+			if (ft_strlen(current) != current_size - 1)
+				ft_putstr("FAILED!");
+		}
 		current_size += step;
 		ft_putstr("\t");
 		show_alloc_mem();
@@ -101,22 +104,6 @@ void		try_every_size_up_to(size_t max, size_t step)
 	show_alloc_mem();
 }
 
-void		get_a_megabyte(void)
-{
-	char	*addr;
-	int		i;
-
-	i = 0;
-	while (i < 200)
-	{
-		addr = (char*)malloc(1024);
-		addr[0] = 42;
-		i++;
-	}
-	ft_putstr("Allocated a megabyte. ");
-	show_alloc_mem();
-}
-
 void		free_as_you_go(size_t repititions, size_t size)
 {
 	size_t	i;
@@ -149,11 +136,10 @@ int			main()
 	ft_putstr("getpagesize: ");
 	put_size_t(getpagesize());
 	ft_putstr("\n");
-	// try_every_size_up_to(1200, 16);
-	// alloc_and_free(200, 64);
-	// alloc_and_free(200, 1024);
-	// alloc_and_free(200, 4096);
-	// growing_realloc();
-	// get_a_megabyte();
+	try_every_size_up_to(1200, 1);
+	alloc_and_free(200, 64);
+	alloc_and_free(200, 1024);
+	alloc_and_free(200, 4096);
+	growing_realloc(1200, 16);
 	free_as_you_go(1024, 1024);
 }

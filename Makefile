@@ -23,10 +23,11 @@ LIBFT = libft/libft.a
 
 SRC =	src/malloc.c \
 		src/get_alloc_env.c \
-		src/utilities.c \
 		src/free.c \
 		src/realloc.c \
-		src/show_alloc_mem.c
+		src/show_alloc_mem.c \
+		src/utilities.c \
+		src/get_mutex.c
 
 OBJ = $(SRC:.c=.o)
 

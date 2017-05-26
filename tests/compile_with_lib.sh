@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    compile_with_main.sh                               :+:      :+:    :+:    #
+#    compile_with_lib.sh                                :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: tfleming <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -10,5 +10,5 @@
 #                                                                              #
 # **************************************************************************** #
 
-gcc -g -I include -I libft/include -L. libft_malloc.so $1
+gcc -g -I include -I libft/include -L. -lft_malloc $1
 echo "DONE COMPILING"

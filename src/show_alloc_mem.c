@@ -12,7 +12,7 @@
 
 #include "malloc.h"
 
-void					print_mmaps(t_list *current, size_t bytes_per_mmap)
+void					print_mmaps(t_list *current, size_t mmap_size)
 {
 	if (!current)
 		ft_putstr(" None\n");
@@ -24,7 +24,7 @@ void					print_mmaps(t_list *current, size_t bytes_per_mmap)
 			ft_putstr("    ");
 			print_pointer(current);
 			ft_putstr(" - ");
-			print_pointer(current + bytes_per_mmap);
+			print_pointer(current + mmap_size);
 			ft_putstr("\n");
 			current = current->next;
 		}
@@ -34,15 +34,15 @@ void					print_mmaps(t_list *current, size_t bytes_per_mmap)
 void					print_all_mmaps(void)
 {
 	ft_putstr("  TINY mmaps (");
-	put_size_t(g_alloc_env->tiny.bytes_per_mmap);
+	put_size_t(g_alloc_env->tiny.mmap_size);
 	ft_putstr(" bytes per mmap):");
 	print_mmaps(g_alloc_env->tiny.existing_mmaps
-				, g_alloc_env->tiny.bytes_per_mmap);
+				, g_alloc_env->tiny.mmap_size);
 	ft_putstr("  MEDIUM mmaps (");
-	put_size_t(g_alloc_env->medium.bytes_per_mmap);
+	put_size_t(g_alloc_env->medium.mmap_size);
 	ft_putstr(" bytes per mmap):");
 	print_mmaps(g_alloc_env->medium.existing_mmaps
-				, g_alloc_env->medium.bytes_per_mmap);
+				, g_alloc_env->medium.mmap_size);
 }
 
 void					print_allocations(t_list *current)
@@ -70,7 +70,7 @@ void					print_allocations(t_list *current)
 	}
 }
 
-void					show_alloc_mem(void)
+void					wrapped_show_alloc_mem(void)
 {
 	t_alloc_env			*env;
 
@@ -91,4 +91,11 @@ void					show_alloc_mem(void)
 	put_size_t(MEDIUM_SIZE);
 	ft_putstr(" bytes):");
 	print_allocations(env->large_mmaps);
+}
+
+void					show_alloc_mem(void)
+{
+	pthread_mutex_lock(get_mutex());
+	wrapped_show_alloc_mem();
+	pthread_mutex_unlock(get_mutex());
 }
