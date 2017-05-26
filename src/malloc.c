@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/24 16:32:08 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:54:23 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void					*alloc_non_large(t_alloc_info *info, size_t size)
 	}
 	metadata = (t_metadata*)info->next_location;
 	metadata->size = size;
-	new_memory = metadata + sizeof(t_metadata);
+	new_memory = metadata + 1;
 	list_push_front(&info->allocations, &metadata->list_element, new_memory);
 	info->next_location = new_memory + size;
 	return (new_memory);
@@ -56,8 +56,8 @@ void					*malloc(size_t size)
 	if (!env)
 		return (NULL);
 	if (size <= TINY_SIZE)
-		return alloc_non_large(&env->tiny, size);
+		return (alloc_non_large(&env->tiny, size));
 	if (size <= MEDIUM_SIZE)
-		return alloc_non_large(&env->medium, size);
-	return alloc_large(&env->large_mmaps, size);
+		return (alloc_non_large(&env->medium, size));
+	return (alloc_large(&env->large_mmaps, size));
 }

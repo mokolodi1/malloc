@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/24 16:32:53 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:51:20 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "ft_printf.h"
 
 # define TINY_SIZE 64
-# define MEDIUM_SIZE 256
+# define MEDIUM_SIZE 1024
 # define MALLOCS_PER_SIZE 100
 
 # define TRUE 1
@@ -77,9 +77,11 @@ void				show_alloc_mem();
 
 extern t_alloc_env	*g_alloc_env;
 
-t_alloc_env		*get_alloc_env();
-void				list_push_front(t_list **begin_list , t_list *list_element
-										, void *data);
+t_alloc_env			*get_alloc_env();
+void				list_push_front(t_list **begin_list, t_list *list_element
+									, void *data);
 void				*get_new_mmap(size_t size);
+void				put_size_t(size_t number);
+void				print_pointer(uintmax_t pointer);
 
 #endif

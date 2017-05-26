@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   general_tests.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/24 16:33:38 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 15:55:16 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 #include <string.h>
 #include "malloc.h"
 
-int			many_of_size(size_t repititions, size_t size)
+void		alloc_and_free(size_t repititions, size_t size)
 {
 	size_t	i;
 	char	*malloced[repititions];
 
-	printf("About to start maloccing...\n");
+	ft_putstr("\nAbout to allocate ");
+	put_size_t(size);
+	ft_putstr(" bytes ");
+	put_size_t(repititions);
+	ft_putstr(" times...\n");
+	show_alloc_mem();
 	i = 0;
 	while (i < repititions)
 	{
@@ -28,26 +33,25 @@ int			many_of_size(size_t repititions, size_t size)
 		malloced[i][size - 1] = '\0';
 		i++;
 	}
-	printf("Checking the memory is still there and freeing...\n");
+	show_alloc_mem();
 	i = 0;
 	while (i < repititions)
 	{
-		if (strlen(malloced[i]) != size - 1) {
-			printf("Failed with size = %zu\n", i);
-		}
+		if (strlen(malloced[i]) != size - 1)
+			ft_putstr("Failed!");
 		free(malloced[i]);
 		i++;
 	}
-	printf("Done testing!\n");
-	return (0);
+	show_alloc_mem();
 }
 
 int			main()
 {
-	// printf("Starting testing program!\n");
-	// printf("getpagesize: %d\n", getpagesize());
-	show_alloc_mem();
-	// printf("About to allocate 8 bytes 4 times.\n");
-	// many_of_size(4, 8);
-	// show_alloc_mem();
+	ft_putstr("Starting testing program...\n");
+	ft_putstr("getpagesize: ");
+	put_size_t(getpagesize());
+	ft_putstr("\n");
+	alloc_and_free(4, 64);
+	alloc_and_free(4, 1024);
+	alloc_and_free(4, 4096);
 }
