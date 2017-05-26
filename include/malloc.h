@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:51:20 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:12:14 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ typedef struct		s_alloc_env {
 */
 
 void				*malloc(size_t size);
-void				free(void *ptr);
-void				*realloc(void *ptr, size_t size);
+void				free(void *to_free);
+void				*realloc(void *old_pointer, size_t size);
 void				show_alloc_mem();
 
 /*
@@ -78,7 +78,7 @@ void				show_alloc_mem();
 extern t_alloc_env	*g_alloc_env;
 
 t_alloc_env			*get_alloc_env();
-void				list_push_front(t_list **begin_list, t_list *list_element
+void				list_push_back(t_list **begin_list, t_list *list_element
 									, void *data);
 void				*get_new_mmap(size_t size);
 void				put_size_t(size_t number);

@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:54:23 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:11:36 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void					*alloc_non_large(t_alloc_info *info, size_t size)
 			return (NULL);
 		info->next_location = new_memory + sizeof(t_list);
 		info->max_location = new_memory + info->bytes_per_mmap;
-		list_push_front(&info->existing_mmaps, new_memory, new_memory);
+		list_push_back(&info->existing_mmaps, new_memory, new_memory);
 	}
 	metadata = (t_metadata*)info->next_location;
 	metadata->size = size;
 	new_memory = metadata + 1;
-	list_push_front(&info->allocations, &metadata->list_element, new_memory);
+	list_push_back(&info->allocations, &metadata->list_element, new_memory);
 	info->next_location = new_memory + size;
 	return (new_memory);
 }
@@ -44,7 +44,7 @@ void					*alloc_large(t_list **existing_mmaps, size_t size)
 		return (NULL);
 	metadata->size = size;
 	new_memory = metadata + sizeof(t_metadata);
-	list_push_front(existing_mmaps, &metadata->list_element, new_memory);
+	list_push_back(existing_mmaps, &metadata->list_element, new_memory);
 	return (new_memory);
 }
 

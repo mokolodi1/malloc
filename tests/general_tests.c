@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:55:16 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:17:19 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,67 @@ void		alloc_and_free(size_t repititions, size_t size)
 	show_alloc_mem();
 }
 
+void		growing_realloc(void)
+{
+	size_t	current_size;
+	size_t	step;
+	size_t	max_size;
+	void	*current;
+	
+	ft_putstr("\nGrowing realloc...\n");
+	current_size = 0;
+	step = 8;
+	max_size = 32;
+	current = NULL;
+	while (current_size <= max_size)
+	{
+		ft_putstr("Just allocated: ");
+		put_size_t(current_size);
+		current = realloc(current, current_size);
+		current_size += step;
+		ft_putstr("\t");
+		show_alloc_mem();
+		ft_putstr("\n");
+	}
+	free(current);
+	ft_putstr("Freed the last allocated memory. ");
+	show_alloc_mem();
+}
+
+void		try_every_size_up_to(size_t max, size_t step)
+{
+	size_t	i;
+	void	*allocations[max];
+
+	ft_putstr("Starting out. ");
+	show_alloc_mem();
+	i = 0;
+	while (i < max)
+	{
+		allocations[i] = malloc(i);
+		i += step;
+	}
+	ft_putstr("Mallocced everything. ");
+	show_alloc_mem();
+	i = 0;
+	while (i < max)
+	{
+		free(allocations[i]);
+		i += step;
+	}
+	ft_putstr("Freed everything. ");
+	show_alloc_mem();
+}
+
 int			main()
 {
 	ft_putstr("Starting testing program...\n");
 	ft_putstr("getpagesize: ");
 	put_size_t(getpagesize());
 	ft_putstr("\n");
-	alloc_and_free(4, 64);
-	alloc_and_free(4, 1024);
-	alloc_and_free(4, 4096);
+	// try_every_size_up_to(1200, 16);
+	// alloc_and_free(4, 64);
+	// alloc_and_free(4, 1024);
+	// alloc_and_free(4, 4096);
+	growing_realloc();
 }

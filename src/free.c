@@ -6,7 +6,7 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:14:42 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 15:47:41 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:13:11 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int					free_in_list(void *to_free, t_list **current, int is_large)
 {
-	void			*to_munmap;
+	t_metadata		*metadata;
 
 	while (*current)
 	{
 		if ((*current)->data == to_free)
 		{
 			if (is_large)
-				to_munmap = *current;
+				metadata = (t_metadata*)*current;
 			*current = (*current)->next;
 			if (is_large)
-				munmap(to_munmap, ((t_metadata*)to_munmap)->size + sizeof(t_metadata));
+				munmap(metadata, metadata->size + sizeof(t_metadata));
 			return (TRUE);
 		}
 		current = &(*current)->next;

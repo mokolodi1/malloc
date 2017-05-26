@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/24 14:34:05 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/24 16:24:31 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/26 16:35:25 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =	src/malloc.c \
 		src/get_alloc_env.c \
 		src/utilities.c \
 		src/free.c \
+		src/realloc.c \
 		src/show_alloc_mem.c
 
 OBJ = $(SRC:.c=.o)
