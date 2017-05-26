@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:51:20 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 17:57:28 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		alloc_and_free(size_t repititions, size_t size)
 	put_size_t(size);
 	ft_putstr(" bytes ");
 	put_size_t(repititions);
-	ft_putstr(" times...\n");
+	ft_putstr(" times. ");
 	show_alloc_mem();
 	i = 0;
 	while (i < repititions)
@@ -33,6 +33,7 @@ void		alloc_and_free(size_t repititions, size_t size)
 		malloced[i][size - 1] = '\0';
 		i++;
 	}
+	ft_putstr("Allocated the memory. ");
 	show_alloc_mem();
 	i = 0;
 	while (i < repititions)
@@ -42,6 +43,7 @@ void		alloc_and_free(size_t repititions, size_t size)
 		free(malloced[i]);
 		i++;
 	}
+	ft_putstr("Freed the memory. ");
 	show_alloc_mem();
 }
 
@@ -120,9 +122,9 @@ int			main()
 	put_size_t(getpagesize());
 	ft_putstr("\n");
 	// try_every_size_up_to(1200, 16);
-	// alloc_and_free(4, 64);
+	alloc_and_free(4, 64);
 	// alloc_and_free(4, 1024);
 	// alloc_and_free(4, 4096);
 	// growing_realloc();
-	get_a_megabyte();
+	// get_a_megabyte();
 }
