@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_find_end.c                                 :+:      :+:    :+:   */
+/*   ft_list_remove.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/05 14:07:04 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 19:58:22 by tfleming         ###   ########.fr       */
+/*   Created: 2017/05/26 19:00:03 by tfleming          #+#    #+#             */
+/*   Updated: 2017/05/26 19:15:16 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#import "libft.h"
 
-t_list		*ft_list_find_end(t_list *list)
+void				ft_list_remove(t_list **current, void *target)
 {
-	if (list->next == NULL)
-		return (list);
-	return (ft_list_find_end(list->next));
+	while (*current)
+	{
+		if ((*current)->data == target)
+		{
+			*current = (*current)->next;
+			return ;
+		}
+		current = &(*current)->next;
+	}
 }

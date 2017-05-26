@@ -6,9 +6,9 @@
 #    By: tfleming <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/26 13:51:09 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/26 14:04:25 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/26 20:49:10 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-gcc -I include -I libft/include -L. libft_malloc.so $1
+gcc -g -I include -I libft/include -L. libft_malloc.so $1
 echo "DONE COMPILING"

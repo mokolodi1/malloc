@@ -6,26 +6,43 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:14:42 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:34:37 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 21:20:28 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-int						free_in_list(void *to_free, t_list **current
-										, int is_large)
+void					free_allocation(t_alloc_metadata *allocation
+											, t_alloc_info *info)
 {
-	t_alloc_metadata	*metadata;
+	if (info)
+	{
+		allocation->mmap->allocations--;
+		if (allocation->mmap->allocations <= 0)
+		{
+			ft_list_remove(&info->existing_mmaps, allocation->mmap);
+			if (allocation->mmap == info->current_mmap)
+				info->current_mmap = NULL;
+			ft_putstr("h");
+			munmap(allocation->mmap, info->bytes_per_mmap);
+		}
+	}
+	else
+		munmap(allocation, allocation->size + sizeof(t_alloc_metadata));
+}
 
+int						free_in_list(void *to_free, t_list **current
+										, t_alloc_info *info)
+{
+	t_alloc_metadata	*old_current;
+	
 	while (*current)
 	{
 		if ((*current)->data == to_free)
 		{
-			if (is_large)
-				metadata = (t_alloc_metadata*)*current;
+			old_current = (t_alloc_metadata*)*current;
 			*current = (*current)->next;
-			if (is_large)
-				munmap(metadata, metadata->size + sizeof(t_alloc_metadata));
+			free_allocation(old_current, info);
 			return (TRUE);
 		}
 		current = &(*current)->next;
@@ -36,13 +53,14 @@ int						free_in_list(void *to_free, t_list **current
 void					free(void *to_free)
 {
 	int					found;
+	t_alloc_env			*env;
 
-	if (!to_free || !g_alloc_env)
+	if (!to_free || !(env = get_alloc_env()))
 		return ;
 	found = FALSE;
-	found = free_in_list(to_free, &g_alloc_env->tiny.allocations, FALSE);
+	found = free_in_list(to_free, &env->tiny.allocations, &env->tiny);
 	if (!found)
-		found = free_in_list(to_free, &g_alloc_env->medium.allocations, FALSE);
+		found = free_in_list(to_free, &env->medium.allocations, &env->medium);
 	if (!found)
-		free_in_list(to_free, &g_alloc_env->large_mmaps, TRUE);
+		free_in_list(to_free, &env->large_mmaps, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:34:59 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:35:53 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 /*
 ** NOTE: I take advantage of the fact that the memory location for
 ** list_element is the same as the struct itself, so order matters for
-** t_metadata.
+** t_mmap_metadata and t_alloc_metadata.
 */
 
 typedef struct		s_mmap_metadata {
@@ -41,7 +41,7 @@ typedef struct		s_mmap_metadata {
 typedef struct		s_alloc_metadata {
 	t_list			list_element;
 	size_t			size;
-	t_mmap_metadata	*mmap_metadata;
+	t_mmap_metadata	*mmap;
 }					t_alloc_metadata;
 
 /*
@@ -56,8 +56,8 @@ typedef struct		s_alloc_metadata {
 
 typedef struct		s_alloc_info {
 	t_list			*existing_mmaps;
-	t_mmap_metadata	*current_mmap;
 	t_list			*allocations;
+	t_mmap_metadata	*current_mmap;
 	void			*next_location;
 	void			*max_location;
 	size_t			bytes_per_mmap;

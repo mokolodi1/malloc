@@ -6,7 +6,7 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 10:53:09 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:37:18 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 20:22:17 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void					print_all_mmaps(void)
 
 void					print_allocations(t_list *current)
 {
-	t_alloc_metadata	*metadata;
+	t_alloc_metadata	*allocation;
 
 	if (!current)
 		ft_putstr(" None\n");
@@ -57,13 +57,13 @@ void					print_allocations(t_list *current)
 		while (current)
 		{
 			ft_putstr("    ");
-			metadata = (t_alloc_metadata*)current;
-			print_pointer(metadata->list_element.data);
+			allocation = (t_alloc_metadata*)current;
+			print_pointer(allocation->list_element.data);
 			ft_putstr(" - ");
-			print_pointer(metadata->list_element.data
-							+ metadata->size);
+			print_pointer(allocation->list_element.data
+							+ allocation->size);
 			ft_putstr(" : ");
-			put_size_t(metadata->size);
+			put_size_t(allocation->size);
 			ft_putchar('\n');
 			current = current->next;
 		}

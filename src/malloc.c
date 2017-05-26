@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:32:27 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 21:06:46 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,42 @@
 
 void					*alloc_non_large(t_alloc_info *info, size_t size)
 {
-	t_alloc_metadata	*metadata;
+	t_alloc_metadata	*allocation;
 	void				*new_memory;
 
-	if (info->next_location + size + sizeof(t_alloc_metadata)
+	if (!info->current_mmap
+		|| info->next_location + size + sizeof(t_alloc_metadata)
 			>= info->max_location)
 	{
 		info->current_mmap = get_new_mmap(info->bytes_per_mmap);
 		if (!info->current_mmap)
 			return (NULL);
-		info->next_location = info->current_mmap + sizeof(t_list);
-		info->max_location = info->current_mmap + info->bytes_per_mmap;
+		info->next_location = info->current_mmap + 1;
+		info->max_location = (void*)info->current_mmap + info->bytes_per_mmap;
 		list_push_back(&info->existing_mmaps, &info->current_mmap->list_element
 						, info->current_mmap);
 	}
-	metadata = (t_alloc_metadata*)info->next_location;
-	metadata->size = size;
-	new_memory = metadata + 1;
-	list_push_back(&info->allocations, &metadata->list_element, new_memory);
-	info->next_location = new_memory + size;
+	allocation = (t_alloc_metadata*)info->next_location;
+	allocation->size = size;
+	allocation->mmap = info->current_mmap;
+	new_memory = allocation + 1;
+	list_push_back(&info->allocations, &allocation->list_element, new_memory);
+	info->current_mmap->allocations++;
+	info->next_location = (void*)allocation + size + sizeof(t_alloc_metadata);
 	return (new_memory);
 }
 
 void					*alloc_large(t_list **existing_mmaps, size_t size)
 {
-	t_alloc_metadata	*metadata;
+	t_alloc_metadata	*allocation;
 	void				*new_memory;
 
-	metadata = get_new_mmap(size + sizeof(t_alloc_metadata));
-	if (!metadata)
+	allocation = get_new_mmap(size + sizeof(t_alloc_metadata));
+	if (!allocation)
 		return (NULL);
-	metadata->size = size;
-	new_memory = metadata + sizeof(t_alloc_metadata);
-	list_push_back(existing_mmaps, &metadata->list_element, new_memory);
+	allocation->size = size;
+	new_memory = allocation + sizeof(t_alloc_metadata);
+	list_push_back(existing_mmaps, &allocation->list_element, new_memory);
 	return (new_memory);
 }
 

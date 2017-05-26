@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 12:34:27 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/24 14:09:50 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:15:09 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void				ft_list_remove_if(t_list **begin_list, void *data_ref
 void				ft_list_reverse(t_list **begin_list);
 size_t				ft_list_size(t_list *begin_list);
 void				ft_list_sort(t_list **first, int (*compare)(void*, void*));
+void				ft_list_remove(t_list **current, void *target);
 
 /*
 ** t_priority_queue

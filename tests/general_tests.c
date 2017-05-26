@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:57:28 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 21:17:08 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void		alloc_and_free(size_t repititions, size_t size)
 	while (i < repititions)
 	{
 		malloced[i] = (char*)malloc(size);
-		memset(malloced[i], 'y', size - 1);
+		ft_memset(malloced[i], 'f', size - 1);
 		malloced[i][size - 1] = '\0';
+		if (strlen(malloced[i]) != size - 1)
+			ft_putstr("FAILED before being done!\n");
 		i++;
 	}
 	ft_putstr("Allocated the memory. ");
@@ -39,7 +41,7 @@ void		alloc_and_free(size_t repititions, size_t size)
 	while (i < repititions)
 	{
 		if (strlen(malloced[i]) != size - 1)
-			ft_putstr("Failed!");
+			ft_putstr("FAILED!?!\n");
 		free(malloced[i]);
 		i++;
 	}
@@ -115,6 +117,32 @@ void		get_a_megabyte(void)
 	show_alloc_mem();
 }
 
+void		free_as_you_go(size_t repititions, size_t size)
+{
+	size_t	i;
+	char	*result;
+	
+	ft_putstr("\nAbout to allocate then free ");
+	put_size_t(size);
+	ft_putstr(" bytes ");
+	put_size_t(repititions);
+	ft_putstr(" times. ");
+	show_alloc_mem();
+	i = 0;
+	while (i < repititions)
+	{
+		result = (char*)malloc(size);
+		ft_memset(result, 'f', size - 1);
+		result[size - 1] = '\0';
+		if (strlen(result) != size - 1)
+			ft_putstr("FAILED before being done!\n");
+		free(result);
+		i++;
+	}
+	ft_putstr("Done. ");
+	show_alloc_mem();
+}
+
 int			main()
 {
 	ft_putstr("Starting testing program...\n");
@@ -122,9 +150,10 @@ int			main()
 	put_size_t(getpagesize());
 	ft_putstr("\n");
 	// try_every_size_up_to(1200, 16);
-	alloc_and_free(4, 64);
-	// alloc_and_free(4, 1024);
-	// alloc_and_free(4, 4096);
+	// alloc_and_free(200, 64);
+	// alloc_and_free(200, 1024);
+	// alloc_and_free(200, 4096);
 	// growing_realloc();
 	// get_a_megabyte();
+	free_as_you_go(1024, 1024);
 }

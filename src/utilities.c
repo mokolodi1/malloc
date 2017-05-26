@@ -6,7 +6,7 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/16 18:04:10 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:36:07 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/26 19:59:02 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void				list_push_back(t_list **begin_list, t_list *list_element
 									, void *data)
 {
 	list_element->data = data;
+	list_element->next = NULL;
 	if (*begin_list == NULL)
 		*begin_list = list_element;
 	else

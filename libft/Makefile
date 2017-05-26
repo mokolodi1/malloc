@@ -6,7 +6,7 @@
 #    By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/04 17:52:57 by tfleming          #+#    #+#              #
-#    Updated: 2017/05/16 18:15:34 by tfleming         ###   ########.fr        #
+#    Updated: 2017/05/26 19:01:08 by tfleming         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,6 +127,7 @@ FT_COMPILED =		ft_islower.o \
 					ft_list_sort.o \
 					ft_list_foreach.o \
 					ft_list_foreach_if.o \
+					ft_list_remove.o \
 					ft_min.o \
 					ft_min_umax.o \
 					ft_max.o \
