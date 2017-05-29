@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:43:52 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 19:35:53 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 15:35:03 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <pthread.h>
 # include "libft.h"
 
-# define TINY_SIZE 64
-# define MEDIUM_SIZE 1024
+# define TINY_SIZE 256
+# define MEDIUM_SIZE 4096
 # define MALLOCS_PER_SIZE 100
 
 # define TRUE 1
