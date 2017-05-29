@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:29:16 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 21:17:08 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:59:44 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		growing_realloc(size_t max_size, size_t step)
 {
 	size_t	current_size;
 	char	*current;
-	
+
 	ft_putstr("\nGrowing realloc...\n");
 	current_size = 0;
 	current = NULL;
@@ -108,7 +108,7 @@ void		free_as_you_go(size_t repititions, size_t size)
 {
 	size_t	i;
 	char	*result;
-	
+
 	ft_putstr("\nAbout to allocate then free ");
 	put_size_t(size);
 	ft_putstr(" bytes ");
@@ -130,7 +130,7 @@ void		free_as_you_go(size_t repititions, size_t size)
 	show_alloc_mem();
 }
 
-int			main()
+int			main(void)
 {
 	ft_putstr("Starting testing program...\n");
 	ft_putstr("getpagesize: ");

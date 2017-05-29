@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:59:05 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 18:40:55 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:55:59 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void			setup_alloc_env(void)
 	pagesize = getpagesize();
 	g_alloc_env->tiny.mmap_size =
 			tiny_size + (pagesize - tiny_size % pagesize);
-	
 	g_alloc_env->medium.mmap_size =
 			medium_size + (pagesize - medium_size % pagesize);
 }

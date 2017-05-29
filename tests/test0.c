@@ -6,14 +6,14 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 12:12:26 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:22:08 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:59:58 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main()
+int			main(void)
 {
-	int i;
-	char *addr;
+	int		i;
+	char	*addr;
 
 	i = 0;
 	while (i < 1024)

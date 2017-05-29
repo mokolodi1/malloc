@@ -6,7 +6,7 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 14:14:42 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 21:20:28 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:55:40 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int						free_in_list(void *to_free, t_list **current
 										, t_alloc_info *info)
 {
 	t_alloc_metadata	*old_current;
-	
+
 	while (*current)
 	{
 		if ((*current)->data == to_free)

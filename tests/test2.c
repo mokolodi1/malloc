@@ -6,16 +6,16 @@
 /*   By: tfleming <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/24 12:14:31 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 17:58:58 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 14:57:30 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #import <stdlib.h>
 
-int main()
+int			main(void)
 {
-	int i;
-	char *addr;
+	int		i;
+	char	*addr;
 
 	i = 0;
 	while (i < 1024)

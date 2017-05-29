@@ -6,7 +6,7 @@
 /*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:30:03 by tfleming          #+#    #+#             */
-/*   Updated: 2017/05/26 21:06:46 by tfleming         ###   ########.fr       */
+/*   Updated: 2017/05/29 15:02:54 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int						new_mmap(t_alloc_info *info)
 	info->next_location = info->current_mmap + 1;
 	info->max_location = (void*)info->current_mmap + info->mmap_size;
 	list_push_back(&info->existing_mmaps, &info->current_mmap->list_element
-				   , info->current_mmap);
+					, info->current_mmap);
 	return (TRUE);
 }
 
@@ -79,7 +79,7 @@ void					*wrapped_malloc(size_t size)
 void					*malloc(size_t size)
 {
 	void				*address;
-	
+
 	pthread_mutex_lock(get_mutex());
 	address = wrapped_malloc(size);
 	pthread_mutex_unlock(get_mutex());
