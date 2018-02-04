@@ -17,3 +17,6 @@ gcc -o test3 test3.c
 gcc -o test4 test4.c
 
 echo "Done compiling"
+
+echo "Use this for compiling test5"
+echo "gcc -o test5 tests/test5.c -L. -lft_malloc -I include -I libft"
